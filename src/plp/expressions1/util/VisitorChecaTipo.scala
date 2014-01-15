@@ -3,7 +3,6 @@ package plp.expressions1.util
 import plp.expressions1.expression._
 
 class VisitorChecaTipo extends Visitor[Tipo]() {
-//  implicit val visitor = this
   def tipo(expr: Expressao) = expr.accept(this)
 
   def visit(expression: ExpAnd) = {
@@ -94,8 +93,6 @@ class VisitorChecaTipo extends Visitor[Tipo]() {
   }
 
   def visit(valor: ValorBooleano) = BOOLEANO
-
   def visit(valor: ValorInteiro) = INTEIRO
-
   def visit(valor: ValorString) = STRING
 }

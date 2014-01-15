@@ -53,33 +53,23 @@ case class ExpNot(exp: Expressao) extends ExpUnaria("~") {
   override def accept[T](visitor: Visitor[T]) = visitor.visit(this)
 }
 
-trait ValorConcreto extends Valor {
-  def isEqual(o: ValorConcreto): Boolean
-}
-
-case class ValorInteiro(valor: Int) extends ValorConcreto {
-  override def accept[T](visitor: Visitor[T]) = visitor.visit(this)
-  def isEqual(obj: ValorConcreto) = obj match {
-    case v: ValorInteiro => valor == v.valor
-    case _ => false
-  }
+trait ValorConcreto[V] extends Valor {
+  val valor: V
   override def toString = valor.toString
 }
 
-case class ValorString(valor: String) extends ValorConcreto {
+case class ValorInteiro(valor: Int) extends ValorConcreto[Int] {
   override def accept[T](visitor: Visitor[T]) = visitor.visit(this)
-  override def toString = valor
-  def isEqual(obj: ValorConcreto) = obj match {
-    case v: ValorString => valor == v.valor
-    case _ => false
-  }
 }
 
-case class ValorBooleano(valor: Boolean) extends ValorConcreto {
+case class ValorString(valor: String) extends ValorConcreto[String] {
   override def accept[T](visitor: Visitor[T]) = visitor.visit(this)
-  def isEqual(obj: ValorConcreto): Boolean = obj match {
-    case v: ValorBooleano => valor == v.valor
-    case _ => false
-  }
+}
+
+case class ValorBooleano(valor: Boolean) extends ValorConcreto[Boolean] {
+  override def accept[T](visitor: Visitor[T]) = visitor.visit(this)
   override def toString = if (valor) "verdadeiro" else "falso"
+  def this(valor: String) {
+    this(valor == "verdadeiro")
+  }
 }

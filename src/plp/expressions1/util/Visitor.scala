@@ -3,7 +3,6 @@ package plp.expressions1.util
 import plp.expressions1.expression._
 
 trait Visitor[T] {
-  implicit val visitor = this
   def visit(expAnd: ExpAnd): T
   def visit(expConcat: ExpConcat): T
   def visit(expEquals: ExpEquals): T

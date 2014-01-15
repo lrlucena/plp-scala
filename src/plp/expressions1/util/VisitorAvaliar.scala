@@ -3,7 +3,7 @@ package plp.expressions1.util
 import plp.expressions1.expression._
 
 class VisitorAvaliar extends Visitor[Valor] {
-  private def vConcreto(e: Expressao) = e.accept(this).asInstanceOf[ValorConcreto]
+  private def vConcreto(e: Expressao) = e.accept(this).asInstanceOf[ValorConcreto[_]]
 
   private def vString(e: Expressao) = e.accept(this).asInstanceOf[ValorString]
 
@@ -18,8 +18,8 @@ class VisitorAvaliar extends Visitor[Valor] {
   }
 
   def visit(expr: ExpEquals) = {
-    val valorEsq: ValorConcreto = vConcreto(expr.esq)
-    val valorDir: ValorConcreto = vConcreto(expr.dir)
+    val valorEsq: ValorConcreto[_] = vConcreto(expr.esq)
+    val valorDir: ValorConcreto[_] = vConcreto(expr.dir)
     ValorBooleano(valorEsq == valorDir)
   }
 

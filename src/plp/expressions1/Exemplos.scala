@@ -6,21 +6,17 @@ import plp.expressions1.expression.ExpLength
 
 object Exemplos extends App {
   val prg1 = criarPrograma(
-    ExpSub(
-      ExpSoma(
-        ExpMenos(
-          ValorInteiro(4)),
-        ValorInteiro(12)),
+    ExpSub(ExpSoma(ExpMenos(ValorInteiro(4)), ValorInteiro(12)),
       ValorInteiro(3)))
   if (!prg1.checaTipo()) {
     println("Erro de tipo")
   } else {
     println(prg1.executar)
   }
-    
+
   val prg2 = criarPrograma(ExpNot(ExpOr(ExpAnd(ValorBooleano(true),
-      ValorBooleano(false)), ExpAnd(ValorBooleano(true), 
-          ValorBooleano(true)))))
+    ValorBooleano(false)), ExpAnd(ValorBooleano(true),
+    ValorBooleano(true)))))
   if (!prg2.checaTipo()) {
     println("Erro de tipo")
   } else {
