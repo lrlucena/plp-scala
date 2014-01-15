@@ -8,25 +8,21 @@ import plp.expressions1.expression._
 import org.antlr.v4.runtime.tree.ParseTreeProperty
 import org.antlr.v4.runtime.tree.ParseTree
 import plp.expressions1.Programa
+import plp.expressions1.parser.E1Parser._
 
-class E1 extends E1BaseListener {
-  private val values = new ParseTreeProperty[Expressao]
-
-  private def setValue(node: ParseTree, value: Expressao) {
+trait PropertyList {
+  protected val values = new ParseTreeProperty[Expressao]
+  protected def setValue(node: ParseTree, value: Expressao) {
     values.put(node, value);
   }
-
-  private def getValue(node: ParseTree) = values.get(node)
-
-  private var _programa: Expressao = _
-
+  protected def getValue(node: ParseTree) = values.get(node)
+  protected var _programa: Expressao = _
   def programa = _programa
+}
 
-  override def exitPrograma(@NotNull ctx: E1Parser.ProgramaContext) {
-    _programa = getValue(ctx.expressao())
-  }
+trait E1 extends E1BaseListener with PropertyList {
 
-  override def exitOpUnaria(@NotNull ctx: E1Parser.OpUnariaContext) {
+  override def exitOpUnaria(@NotNull ctx: OpUnariaContext) {
     val exp = getValue(ctx.expressao())
     val resultado =
       ctx.getChild(0).getText() match {
@@ -37,17 +33,20 @@ class E1 extends E1BaseListener {
     setValue(ctx, resultado)
   }
 
-  override def exitTerminal(@NotNull ctx: E1Parser.TerminalContext) {
+  override def exitPrograma(@NotNull ctx: ProgramaContext) {
+    _programa = getValue(ctx.expressao())
+  }
+  override def exitTerminal(@NotNull ctx: TerminalContext) {
     setValue(ctx, getValue(ctx.getChild(0)))
   }
 
-  override def exitValor(@NotNull ctx: E1Parser.ValorContext) {
+  override def exitValor(@NotNull ctx: ValorContext) {
     val booleano = Option(ctx.Booleano())
     val inteiro = Option(ctx.Inteiro())
     val string = Option(ctx.String())
     val lista = (booleano, inteiro, string)
     val resultado = lista match {
-      case (Some(a), _, _) => ValorBooleano(a.getText()=="verdadeiro")
+      case (Some(a), _, _) => ValorBooleano(a.getText() == "verdadeiro")
       case (_, Some(a), _) => ValorInteiro(a.getText().toInt)
       case (_, _, Some(a)) => ValorString(a.getText().stripPrefix(""""""").stripSuffix("""""""))
 
@@ -56,7 +55,7 @@ class E1 extends E1BaseListener {
     setValue(ctx, resultado)
   }
 
-  override def exitOpBin(@NotNull ctx: E1Parser.OpBinContext) {
+  override def exitOpBin(@NotNull ctx: OpBinContext) {
     val esq = getValue(ctx.expressao(0))
     val dir = getValue(ctx.expressao(1))
     val resultado =

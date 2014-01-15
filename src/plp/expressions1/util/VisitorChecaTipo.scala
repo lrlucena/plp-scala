@@ -1,6 +1,20 @@
 package plp.expressions1.util
 
-import plp.expressions1.expression._
+import plp.expressions1.expression.ExpAnd
+import plp.expressions1.expression.ExpConcat
+import plp.expressions1.expression.ExpEquals
+import plp.expressions1.expression.ExpLength
+import plp.expressions1.expression.ExpMenos
+import plp.expressions1.expression.ExpNot
+import plp.expressions1.expression.ExpOr
+import plp.expressions1.expression.ExpSoma
+import plp.expressions1.expression.ExpSub
+import plp.expressions1.expression.Expressao
+import plp.expressions1.expression.ValorBooleano
+import plp.expressions1.expression.ValorInteiro
+import plp.expressions1.expression.ValorString
+
+class VisitorException(msg: String = "") extends Exception(msg) {}
 
 class VisitorChecaTipo extends Visitor[Tipo]() {
   def tipo(expr: Expressao) = expr.accept(this)

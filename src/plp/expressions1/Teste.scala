@@ -9,10 +9,10 @@ import plp.expressions1.parser.E1Parser
 import plp.expressions1.util.VisitorAvaliar
 
 object Teste extends App {
-  val resultado = programa(""""3+4"""")
+  val resultado = programa("""1+2+3+4-5""")
   val visitorAval = new VisitorAvaliar()
   val p = resultado.accept(visitorAval)
- // val p = ConstrutorPrograma.criarPrograma(resultado).executar
+  // val p = ConstrutorPrograma.criarPrograma(resultado).executar
   println(p)
 
   def programa(codigo: String) = {
@@ -22,7 +22,7 @@ object Teste extends App {
     val parser = new E1Parser(tokens)
     val tree = parser.programa()
     val walker = new ParseTreeWalker()
-    val listener = new E1()
+    val listener = new E1{}
     walker.walk(listener, tree)
     listener.programa
   }
