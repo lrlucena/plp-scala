@@ -32,7 +32,7 @@ class E1 extends E1BaseListener {
       ctx.getChild(0).getText() match {
         case "-" => ExpMenos(exp)
         case "length" => ExpLength(exp)
-        case "~" => ExpNot(exp)
+        case "not" => ExpNot(exp)
       }
     setValue(ctx, resultado)
   }
@@ -47,7 +47,7 @@ class E1 extends E1BaseListener {
     val string = Option(ctx.String())
     val lista = (booleano, inteiro, string)
     val resultado = lista match {
-      case (Some(a), _, _) => ValorBooleano(a.getText().toBoolean)
+      case (Some(a), _, _) => ValorBooleano(a.getText()=="verdadeiro")
       case (_, Some(a), _) => ValorInteiro(a.getText().toInt)
       case (_, _, Some(a)) => ValorString(a.getText())
 

@@ -4,12 +4,10 @@ import org.antlr.v4.runtime.ANTLRInputStream
 import org.antlr.v4.runtime.CommonTokenStream
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 
-import plp.expressions1.parser.E1
-import plp.expressions1.parser.E1Lexer
-import plp.expressions1.parser.E1Parser
+import plp.expressions1.parser.{ E1, E1Lexer, E1Parser }
 
 object Teste extends App {
-  val resultado = programa("""1+2+ length "ok" """)
+  val resultado = programa("""1+2 +3+length "ok"""")
   val p = ConstrutorPrograma.criarPrograma(resultado).executar
   println(p)
 

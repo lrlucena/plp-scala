@@ -230,7 +230,7 @@ public class E1Parser extends Parser {
 						pushNewRecursionContext(_localctx, _startState, RULE_expressao);
 						setState(21);
 						if (!(5 >= _localctx._p)) throw new FailedPredicateException(this, "5 >= $_p");
-						setState(22); match(2);
+						setState(22); match(7);
 						setState(23); expressao(6);
 						}
 						break;
@@ -241,7 +241,7 @@ public class E1Parser extends Parser {
 						pushNewRecursionContext(_localctx, _startState, RULE_expressao);
 						setState(24);
 						if (!(4 >= _localctx._p)) throw new FailedPredicateException(this, "4 >= $_p");
-						setState(25); match(5);
+						setState(25); match(2);
 						setState(26); expressao(5);
 						}
 						break;
@@ -252,7 +252,7 @@ public class E1Parser extends Parser {
 						pushNewRecursionContext(_localctx, _startState, RULE_expressao);
 						setState(27);
 						if (!(3 >= _localctx._p)) throw new FailedPredicateException(this, "3 >= $_p");
-						setState(28); match(7);
+						setState(28); match(5);
 						setState(29); expressao(4);
 						}
 						break;
@@ -361,8 +361,8 @@ public class E1Parser extends Parser {
 		"\23\5\4\3\2\r\16\7\b\2\2\16\23\5\4\3\2\17\20\7\6\2\2\20\23\5\4\3\2\21"+
 		"\23\5\6\4\2\22\n\3\2\2\2\22\r\3\2\2\2\22\17\3\2\2\2\22\21\3\2\2\2\23%"+
 		"\3\2\2\2\24\25\6\3\2\3\25\26\t\2\2\2\26$\5\4\3\2\27\30\6\3\3\3\30\31\7"+
-		"\4\2\2\31$\5\4\3\2\32\33\6\3\4\3\33\34\7\7\2\2\34$\5\4\3\2\35\36\6\3\5"+
-		"\3\36\37\7\t\2\2\37$\5\4\3\2 !\6\3\6\3!\"\7\n\2\2\"$\5\4\3\2#\24\3\2\2"+
+		"\t\2\2\31$\5\4\3\2\32\33\6\3\4\3\33\34\7\4\2\2\34$\5\4\3\2\35\36\6\3\5"+
+		"\3\36\37\7\7\2\2\37$\5\4\3\2 !\6\3\6\3!\"\7\n\2\2\"$\5\4\3\2#\24\3\2\2"+
 		"\2#\27\3\2\2\2#\32\3\2\2\2#\35\3\2\2\2# \3\2\2\2$\'\3\2\2\2%#\3\2\2\2"+
 		"%&\3\2\2\2&\5\3\2\2\2\'%\3\2\2\2()\t\3\2\2)\7\3\2\2\2\5\22#%";
 	public static final ATN _ATN =
