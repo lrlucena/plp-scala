@@ -49,7 +49,7 @@ class E1 extends E1BaseListener {
     val resultado = lista match {
       case (Some(a), _, _) => ValorBooleano(a.getText()=="verdadeiro")
       case (_, Some(a), _) => ValorInteiro(a.getText().toInt)
-      case (_, _, Some(a)) => ValorString(a.getText())
+      case (_, _, Some(a)) => ValorString(a.getText().stripPrefix(""""""").stripSuffix("""""""))
 
       case _ => ValorString("[[[Erro]]]")
     }
