@@ -13,21 +13,38 @@ import plp.expressions1.expression.Expressao
 import plp.expressions1.expression.ValorBooleano
 import plp.expressions1.expression.ValorInteiro
 import plp.expressions1.expression.ValorString
+import plp.expressions1.expression.ExpBinaria
 
 class VisitorException(msg: String = "") extends Exception(msg) {}
 
-class VisitorChecaTipo extends Visitor[Tipo]() {
-  def tipo(expr: Expressao) = expr.accept(this)
-
-  def visit(expression: ExpAnd) = {
+trait ChecaTipo {
+  def tipo(expr: Expressao): Tipo
+  
+  protected def opBinBool(expression: ExpBinaria, erro: String) = {
     val tipoEsq = tipo(expression.esq)
     val tipoDir = tipo(expression.dir)
-    if (tipoEsq.eBooleano && tipoDir.eBooleano) {
-      BOOLEANO
-    } else {
-      throw new VisitorException("A operação de conjunção lógica necessita que os " + "seus termos sejam do tipo booleano.")
-    }
+    if (tipoEsq.eBooleano && tipoDir.eBooleano) BOOLEANO
+    else throw new VisitorException(erro)
   }
+  protected def opBinInt(expression: ExpBinaria, erro: String) = {
+    val tipoEsq = tipo(expression.esq)
+    val tipoDir = tipo(expression.dir)
+    if (tipoEsq.eInteiro && tipoDir.eInteiro) INTEIRO
+    else throw new VisitorException(erro)
+  }
+  protected def opBinStr(expression: ExpBinaria, erro: String) = {
+    val tipoEsq = tipo(expression.esq)
+    val tipoDir = tipo(expression.dir)
+    if (tipoEsq.eString && tipoDir.eString) STRING
+    else throw new VisitorException(erro)
+  }
+}
+
+class VisitorChecaTipo extends Visitor[Tipo] with ChecaTipo {
+  def tipo(expr: Expressao) = expr.accept(this)
+
+  def visit(expression: ExpAnd) = opBinBool(expression,
+    "A operação de conjunção lógica necessita que os seus termos sejam do tipo booleano.")
 
   def visit(expression: ExpConcat) = {
     val tipoEsq = tipo(expression.esq)
@@ -35,7 +52,7 @@ class VisitorChecaTipo extends Visitor[Tipo]() {
     if (tipoEsq.eString && tipoDir.eString) {
       STRING
     } else {
-      throw new VisitorException("A opera��o de concatena��o necessita que o " + "seu termo seja uma string.")
+      throw new VisitorException("A operação de concatenação necessita que o seu termo seja uma string.")
     }
   }
 
@@ -45,7 +62,7 @@ class VisitorChecaTipo extends Visitor[Tipo]() {
     if (tipoEsq == tipoDir) {
       BOOLEANO
     } else {
-      throw new VisitorException("A operação de equals necessita que seus " + "termos sejam do mesmo tipo. ")
+      throw new VisitorException("A operação de equals necessita que seus termos sejam do mesmo tipo. ")
     }
   }
 
@@ -54,7 +71,7 @@ class VisitorChecaTipo extends Visitor[Tipo]() {
     if (tipoExp.eString) {
       INTEIRO
     } else {
-      throw new VisitorException("A opera��o de menos necessita que o " + "seu termo seja uma string.")
+      throw new VisitorException("A operação de menos necessita que o seu termo seja uma string.")
     }
   }
 
@@ -63,7 +80,7 @@ class VisitorChecaTipo extends Visitor[Tipo]() {
     if (tipoExp.eInteiro) {
       INTEIRO
     } else {
-      throw new VisitorException("A opera��o de menos necessita que seus " + "termos sejam inteiros. ")
+      throw new VisitorException("A operação de menos necessita que seus termos sejam inteiros.")
     }
   }
 
@@ -72,39 +89,18 @@ class VisitorChecaTipo extends Visitor[Tipo]() {
     if (tipoExp.eBooleano) {
       BOOLEANO
     } else {
-      throw new VisitorException("A opera��o de nega��o l�gica necessita que o " + "seu termo seja booleano. ")
+      throw new VisitorException("A operaçãoo de negação lógica necessita que o seu termo seja booleano.")
     }
   }
 
-  def visit(expression: ExpOr) = {
-    val tipoEsq = tipo(expression.esq)
-    val tipoDir = tipo(expression.dir)
-    if (tipoEsq.eBooleano && tipoDir.eBooleano) {
-      BOOLEANO
-    } else {
-      throw new VisitorException("A opera��o de disjun��o l�gica necessita que seus " + "termos sejam booleanos. ")
-    }
-  }
+  def visit(expression: ExpOr) = opBinBool(expression,
+    "A operação de disjunção lógica necessita que seus termos sejam booleanos.")
 
-  def visit(expression: ExpSoma) = {
-    val tipoEsq = tipo(expression.esq)
-    val tipoDir = tipo(expression.dir)
-    if (tipoEsq.eInteiro && tipoDir.eInteiro) {
-      INTEIRO
-    } else {
-      throw new VisitorException("A opera��o de soma necessita que seus " + "termos sejam inteiros. ")
-    }
-  }
+  def visit(expression: ExpSoma) = opBinInt(expression,
+    "A operação de soma necessita que seus termos sejam inteiros.")
 
-  def visit(expression: ExpSub) = {
-    val tipoEsq = tipo(expression.esq)
-    val tipoDir = tipo(expression.dir)
-    if (tipoEsq.eInteiro && tipoDir.eInteiro) {
-      INTEIRO
-    } else {
-      throw new VisitorException("A opera��o de subtra��o necessita que seus " + "termos sejam inteiros. ")
-    }
-  }
+  def visit(expression: ExpSub) = opBinInt(expression,
+    "A operação de subtração necessita que seus termos sejam inteiros. ")
 
   def visit(valor: ValorBooleano) = BOOLEANO
   def visit(valor: ValorInteiro) = INTEIRO
