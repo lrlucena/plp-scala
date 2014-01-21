@@ -3,38 +3,34 @@ package plp.expressions2.memory
 import plp.expressions2.expression.Id
 import plp.expressions1.util.Tipo
 import plp.expressions1.expression.Valor
+import collection.mutable.Stack
+import collection.mutable.Map
 
 trait Ambiente[T] {
-  var pilha: List[Map[Id, T]] = List[Map[Id, T]]()
+  var pilha = Stack[Map[Id, T]]()
 
   def incrementa {
-    pilha = Map[Id, T]() :: pilha
+    pilha.push(Map())
   }
 
   def restaura() {
-    pilha = pilha.tail
+    pilha.pop
   }
 
   def map(idArg: Id, valorId: T) {
-    val aux = pilha.head
-    if (aux.contains(idArg)) {
-      throw new IdentificadorJaDeclaradoException()
-    } else
-      pilha = (aux + (idArg -> valorId)) :: pilha.tail
+    val topo = pilha.head
+    if (topo.contains(idArg)) {
+      throw new IdentificadorJaDeclaradoException
+    } else {
+      topo += idArg -> valorId
+    }
   }
 
   def get(idArg: Id): T = {
-    var result: Option[T] = None
-    for (map <- pilha) {
-      val x = map.find(_._1 == idArg)
-      x match {
-        case Some((_, a)) if result == None => result = Some(a)
-        case _ =>
-      }
-    }
-    result match {
-      case None => throw new IdentificadorNaoDeclaradoException("")
-      case Some(a) => a
+    val valor = for (map <- pilha; (k, v) <- map if idArg == k) yield v
+    valor match {
+      case Stack(a, _*) => a
+      case Stack() => throw new IdentificadorNaoDeclaradoException
     }
   }
 }
