@@ -2,9 +2,7 @@ package plp.expressions1.expression
 
 import plp.expressions1.util.Visitor
 
-trait Expressao extends {
-  def accept[T](visitor: Visitor[T]): T = visitor.v(this)
-}
+trait Expressao {}
 
 trait Valor extends Expressao {}
 

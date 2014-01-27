@@ -10,7 +10,7 @@ class Programa(val exp: Expressao, visitorCheca: VisitorChecaTipo, visitorAvalia
 
   def executar: Valor = {
     try {
-      exp.accept(visitorAvaliar)
+      visitorAvaliar.v(exp)
     } catch {
       case ve: VisitorException => {
         ve.printStackTrace()
@@ -21,7 +21,7 @@ class Programa(val exp: Expressao, visitorCheca: VisitorChecaTipo, visitorAvalia
 
   def checaTipo(): Boolean = {
     try {
-      exp.accept(visitorCheca)
+      visitorCheca.v(exp)
       true
     } catch {
       case ve: VisitorException => false

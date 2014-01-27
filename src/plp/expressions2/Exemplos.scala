@@ -5,6 +5,7 @@ import plp.expressions1.expression.ValorInteiro
 import plp.expressions2.expression.ExpDeclaracao
 import plp.expressions2.expression.Id
 import plp.expressions2.expression.DecVariavel
+import plp.expressions2.expression.Id
 
 object Exemplos extends App {
   val idX = Id("x")

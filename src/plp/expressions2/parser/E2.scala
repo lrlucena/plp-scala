@@ -1,12 +1,30 @@
 package plp.expressions2.parser
 
 import org.antlr.v4.runtime.misc.NotNull
-import plp.expressions1.expression._
+
+import plp.expressions1.expression.ExpAnd
+import plp.expressions1.expression.ExpConcat
+import plp.expressions1.expression.ExpEquals
+import plp.expressions1.expression.ExpLength
+import plp.expressions1.expression.ExpMenos
+import plp.expressions1.expression.ExpNot
+import plp.expressions1.expression.ExpOr
+import plp.expressions1.expression.ExpSoma
+import plp.expressions1.expression.ExpSub
+import plp.expressions1.expression.ValorBooleano
+import plp.expressions1.expression.ValorInteiro
+import plp.expressions1.expression.ValorString
 import plp.expressions1.parser.PropertyList
+import plp.expressions2.expression.DecVariavel
 import plp.expressions2.expression.ExpDeclaracao
 import plp.expressions2.expression.Id
-import plp.expressions2.parser.E2Parser._
-import plp.expressions2.expression.DecVariavel
+import plp.expressions2.parser.E2Parser.DecVarContext
+import plp.expressions2.parser.E2Parser.DecVariavelContext
+import plp.expressions2.parser.E2Parser.OpBinContext
+import plp.expressions2.parser.E2Parser.OpUnariaContext
+import plp.expressions2.parser.E2Parser.ProgramaContext
+import plp.expressions2.parser.E2Parser.TerminalContext
+import plp.expressions2.parser.E2Parser.ValorContext
 
 trait E2 extends E2BaseListener with PropertyList {
   override def exitPrograma(@NotNull ctx: ProgramaContext) {

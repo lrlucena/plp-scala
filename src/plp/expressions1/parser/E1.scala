@@ -11,11 +11,12 @@ import plp.expressions1.Programa
 import plp.expressions1.parser.E1Parser._
 
 trait PropertyList {
-  protected val values = new ParseTreeProperty[Expressao]
-  protected def setValue(node: ParseTree, value: Expressao) {
+  protected val values = new ParseTreeProperty[Any]
+  protected def setValue(node: ParseTree, value: Any) {
     values.put(node, value);
   }
-  protected def getValue(node: ParseTree) = values.get(node)
+  protected def getValue(node: ParseTree) = values.get(node).asInstanceOf[Expressao]
+  protected def get(node: ParseTree) = values.get(node)
   protected var _programa: Expressao = _
   def programa = _programa
 }

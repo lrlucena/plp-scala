@@ -1,6 +1,10 @@
 package plp.expressions1.util
 
+import Tipo.BOOLEANO
+import Tipo.INTEIRO
+import Tipo.STRING
 import plp.expressions1.expression.ExpAnd
+import plp.expressions1.expression.ExpBinaria
 import plp.expressions1.expression.ExpConcat
 import plp.expressions1.expression.ExpEquals
 import plp.expressions1.expression.ExpLength
@@ -13,13 +17,12 @@ import plp.expressions1.expression.Expressao
 import plp.expressions1.expression.ValorBooleano
 import plp.expressions1.expression.ValorInteiro
 import plp.expressions1.expression.ValorString
-import plp.expressions1.expression.ExpBinaria
 
 class VisitorException(msg: String = "") extends Exception(msg) {}
 
 trait ChecaTipo {
   def tipo(expr: Expressao): Tipo
-  
+
   protected def opBinBool(expression: ExpBinaria, erro: String) = {
     val tipoEsq = tipo(expression.esq)
     val tipoDir = tipo(expression.dir)
@@ -41,7 +44,7 @@ trait ChecaTipo {
 }
 
 class VisitorChecaTipo extends Visitor[Tipo] with ChecaTipo {
-  def tipo(expr: Expressao) = expr.accept(this)
+  def tipo(expr: Expressao) = v(expr)
 
   def visit(expression: ExpAnd) = opBinBool(expression,
     "A operação de conjunção lógica necessita que os seus termos sejam do tipo booleano.")

@@ -13,7 +13,7 @@ object Teste extends App {
   val resultado = programa("""let var x = 1 in x+4""")
   val ambiente = new AmbienteExecucao()
   val visitorAval = new VisitorAvaliar(ambiente)
-  val p = resultado.accept(visitorAval)
+  val p = visitorAval.v(resultado)
   println(p)
 
   def programa(codigo: String) = {

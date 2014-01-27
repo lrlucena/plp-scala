@@ -8,35 +8,32 @@ import plp.expressions2.memory.AmbienteCompilacao
 
 class VisitorChecaTipo(ambiente: AmbienteCompilacao) extends VisitorLE1() with Visitor[Tipo] {
 
-  def visit(expressao: Id): Tipo = {
-    ambiente.get(expressao)
-  }
+  def visit(id: Id): Tipo = ambiente(id)
 
   def visit(expDeclaracao: ExpDeclaracao) = {
     ambiente.incrementa
     val result = false
     try {
       val resolvedTypes = resolveAndCheckTypeBindings(expDeclaracao)
-      this.includeTypeBindings(resolvedTypes)
-      expDeclaracao.expressao.accept(this)
+      includeTypeBindings(resolvedTypes)
+      v(expDeclaracao.expressao)
     } finally {
       ambiente.restaura()
     }
   }
 
-  private def resolveAndCheckTypeBindings(expDeclaracao: ExpDeclaracao): Map[Id, Tipo] = {
+  private def resolveAndCheckTypeBindings(expDeclaracao: ExpDeclaracao) = {
     val resolvedTypes =
       for (declaration <- expDeclaracao.seqdecVariavel) yield {
-        val tipo = declaration.expressao.accept(this)
+        val tipo = v(declaration.expressao)
         (declaration.id -> tipo)
       }
     resolvedTypes.toMap
   }
 
   private def includeTypeBindings(resolvedTypes: Map[Id, Tipo]) {
-    for (id <- resolvedTypes.keySet) {
-      val `type` = resolvedTypes.get(id).get
-      ambiente.map(id, `type`)
+    for ((id, tipo) <- resolvedTypes) {
+      ambiente(id) = tipo
     }
   }
 }

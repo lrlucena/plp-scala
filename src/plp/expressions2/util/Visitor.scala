@@ -1,6 +1,5 @@
 package plp.expressions2.util
 
-import plp.expressions1.expression.Expressao
 import plp.expressions1.util.{ Visitor => VisitorE1 }
 import plp.expressions2.expression.ExpDeclaracao
 import plp.expressions2.expression.Id
