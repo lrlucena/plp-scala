@@ -2,10 +2,8 @@ package plp.expressions2
 
 import plp.expressions1.Programa
 import plp.expressions1.expression.Expressao
-import plp.expressions2.memory.AmbienteCompilacao
-import plp.expressions2.memory.AmbienteExecucao
-import plp.expressions2.util.VisitorAvaliar
-import plp.expressions2.util.VisitorChecaTipo
+import plp.expressions2.memory.{AmbienteCompilacao, AmbienteExecucao}
+import plp.expressions2.util.{VisitorAvaliar, VisitorChecaTipo}
 
 object ConstrutorPrograma {
   def criarPrograma(exp: Expressao): Programa = {

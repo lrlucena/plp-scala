@@ -1,8 +1,7 @@
 package plp.expressions2.util
 
-import plp.expressions1.util.{ Visitor => VisitorE1 }
-import plp.expressions2.expression.ExpDeclaracao
-import plp.expressions2.expression.Id
+import plp.expressions1.util.{Visitor => VisitorE1}
+import plp.expressions2.expression.{ExpDeclaracao, Id}
 
 trait Visitor[T] extends VisitorE1[T] {
   def visit(expression: ExpDeclaracao): T

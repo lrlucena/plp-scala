@@ -1,8 +1,7 @@
 package plp.expressions1
 
-import plp.expressions1.expression._
 import ConstrutorPrograma.criarPrograma
-import plp.expressions1.expression.ExpLength
+import plp.expressions1.expression.{ExpAnd, ExpConcat, ExpEquals, ExpLength, ExpMenos, ExpNot, ExpOr, ExpSoma, ExpSub, ValorBooleano, ValorInteiro, ValorString}
 
 object Exemplos extends App {
   val prg1 = criarPrograma(

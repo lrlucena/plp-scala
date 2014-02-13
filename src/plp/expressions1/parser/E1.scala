@@ -1,14 +1,10 @@
 package plp.expressions1.parser
 
-import org.antlr.v4.runtime.ParserRuleContext
 import org.antlr.v4.runtime.misc.NotNull
-import org.antlr.v4.runtime.tree.ErrorNode
-import org.antlr.v4.runtime.tree.TerminalNode
-import plp.expressions1.expression._
-import org.antlr.v4.runtime.tree.ParseTreeProperty
-import org.antlr.v4.runtime.tree.ParseTree
-import plp.expressions1.Programa
-import plp.expressions1.parser.E1Parser._
+import org.antlr.v4.runtime.tree.{ParseTree, ParseTreeProperty}
+
+import plp.expressions1.expression.{ExpAnd, ExpConcat, ExpEquals, ExpLength, ExpMenos, ExpNot, ExpOr, ExpSoma, ExpSub, Expressao, ValorBooleano, ValorInteiro, ValorString}
+import plp.expressions1.parser.E1Parser.{OpBinContext, OpUnariaContext, ProgramaContext, TerminalContext, ValorContext}
 
 trait PropertyList {
   protected val values = new ParseTreeProperty[Any]

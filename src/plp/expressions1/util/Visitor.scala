@@ -1,6 +1,6 @@
 package plp.expressions1.util
 
-import plp.expressions1.expression._
+import plp.expressions1.expression.{ExpAnd, ExpConcat, ExpEquals, ExpLength, ExpMenos, ExpNot, ExpOr, ExpSoma, ExpSub, Expressao, ValorBooleano, ValorInteiro, ValorString}
 
 trait Visitor[T] {
   def visit(expAnd: ExpAnd): T

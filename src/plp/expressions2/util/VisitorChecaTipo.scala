@@ -1,9 +1,7 @@
 package plp.expressions2.util
 
-import plp.expressions1.util.Tipo
-import plp.expressions1.util.{ VisitorChecaTipo => VisitorLE1 }
-import plp.expressions2.expression.ExpDeclaracao
-import plp.expressions2.expression.Id
+import plp.expressions1.util.{Tipo, VisitorChecaTipo => VisitorLE1}
+import plp.expressions2.expression.{ExpDeclaracao, Id}
 import plp.expressions2.memory.AmbienteCompilacao
 
 class VisitorChecaTipo(ambiente: AmbienteCompilacao) extends VisitorLE1() with Visitor[Tipo] {

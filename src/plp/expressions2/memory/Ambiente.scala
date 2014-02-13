@@ -1,7 +1,6 @@
 package plp.expressions2.memory
 
-import scala.collection.mutable.Map
-import scala.collection.mutable.Stack
+import scala.collection.mutable.{Map, Stack}
 
 import plp.expressions1.expression.Valor
 import plp.expressions1.util.Tipo

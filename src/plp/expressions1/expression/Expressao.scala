@@ -1,7 +1,5 @@
 package plp.expressions1.expression
 
-import plp.expressions1.util.Visitor
-
 trait Expressao {}
 
 trait Valor extends Expressao {}

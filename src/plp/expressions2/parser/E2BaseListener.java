@@ -1,4 +1,4 @@
-// Generated from C:\Users\Lucena\Workspaces\Eclipse IDE for Java Developers 421\PLP2014\E2.g4 by ANTLR 4.1
+// Generated from E2.g4 by ANTLR 4.1
 package plp.expressions2.parser;
 
 import org.antlr.v4.runtime.ParserRuleContext;

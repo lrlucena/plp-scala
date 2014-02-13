@@ -1,8 +1,7 @@
 package plp.expressions1
 
 import plp.expressions1.expression.Expressao
-import plp.expressions1.util.VisitorAvaliar
-import plp.expressions1.util.VisitorChecaTipo
+import plp.expressions1.util.{VisitorAvaliar, VisitorChecaTipo}
 
 object ConstrutorPrograma {
 

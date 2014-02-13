@@ -1,7 +1,7 @@
 
 package plp.expressions1.util
 
-import plp.expressions1.expression._
+import plp.expressions1.expression.{ExpAnd, ExpConcat, ExpEquals, ExpLength, ExpMenos, ExpNot, ExpOr, ExpSoma, ExpSub, Expressao, Valor, ValorBooleano, ValorConcreto, ValorInteiro, ValorString}
 
 class VisitorAvaliar extends Visitor[Valor] {
   private def vConcreto(e: Expressao) = v(e).asInstanceOf[ValorConcreto[_]]

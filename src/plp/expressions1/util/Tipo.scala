@@ -13,5 +13,6 @@ trait Tipo {
   def eBooleano = this == BOOLEANO
   def eString = this == STRING
   def eValido = eInteiro || eBooleano || eString
+  def eIndefinida = this != INTEIRO && this != BOOLEANO && this != STRING
   def intersecao(outroTipo: Tipo) = if (this == outroTipo) Some(this) else None
 }

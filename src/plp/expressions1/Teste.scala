@@ -1,12 +1,9 @@
 package plp.expressions1
 
-import org.antlr.v4.runtime.ANTLRInputStream
-import org.antlr.v4.runtime.CommonTokenStream
+import org.antlr.v4.runtime.{ANTLRInputStream, CommonTokenStream}
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 
-import plp.expressions1.parser.E1
-import plp.expressions1.parser.E1Lexer
-import plp.expressions1.parser.E1Parser
+import plp.expressions1.parser.{E1, E1Lexer, E1Parser}
 import plp.expressions1.util.VisitorAvaliar
 
 object Teste extends App {

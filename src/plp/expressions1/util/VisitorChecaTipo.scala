@@ -1,22 +1,7 @@
 package plp.expressions1.util
 
-import Tipo.BOOLEANO
-import Tipo.INTEIRO
-import Tipo.STRING
-import plp.expressions1.expression.ExpAnd
-import plp.expressions1.expression.ExpBinaria
-import plp.expressions1.expression.ExpConcat
-import plp.expressions1.expression.ExpEquals
-import plp.expressions1.expression.ExpLength
-import plp.expressions1.expression.ExpMenos
-import plp.expressions1.expression.ExpNot
-import plp.expressions1.expression.ExpOr
-import plp.expressions1.expression.ExpSoma
-import plp.expressions1.expression.ExpSub
-import plp.expressions1.expression.Expressao
-import plp.expressions1.expression.ValorBooleano
-import plp.expressions1.expression.ValorInteiro
-import plp.expressions1.expression.ValorString
+import Tipo.{BOOLEANO, INTEIRO, STRING}
+import plp.expressions1.expression.{ExpAnd, ExpBinaria, ExpConcat, ExpEquals, ExpLength, ExpMenos, ExpNot, ExpOr, ExpSoma, ExpSub, Expressao, ValorBooleano, ValorInteiro, ValorString}
 
 class VisitorException(msg: String = "") extends Exception(msg) {}
 

@@ -1,9 +1,8 @@
 package plp.expressions2.util
 
 import plp.expressions1.expression.Valor
-import plp.expressions1.util.{ VisitorAvaliar => VisitorLE1 }
-import plp.expressions2.expression.ExpDeclaracao
-import plp.expressions2.expression.Id
+import plp.expressions1.util.{VisitorAvaliar => VisitorLE1}
+import plp.expressions2.expression.{ExpDeclaracao, Id}
 import plp.expressions2.memory.AmbienteExecucao
 
 class VisitorAvaliar(ambiente: AmbienteExecucao)
@@ -12,13 +11,13 @@ class VisitorAvaliar(ambiente: AmbienteExecucao)
   override def visit(declaracao: ExpDeclaracao): Valor = {
     ambiente.incrementa
     val resolvedValues = resolveValueBindings(declaracao)
-    includeValueBindings(ambiente, resolvedValues)
+    includeValueBindings(resolvedValues)
     val result = v(declaracao.expressao)
     ambiente.restaura
     result
   }
 
-  protected def includeValueBindings(ambiente: AmbienteExecucao, resolvedValues: Map[Id, Valor]) {
+  protected def includeValueBindings(resolvedValues: Map[Id, Valor]) {
     for ((id, valor) <- resolvedValues) {
       ambiente(id) = valor
     }
@@ -34,7 +33,6 @@ class VisitorAvaliar(ambiente: AmbienteExecucao)
   }
 
   override def visit(id: Id) = {
-    println(ambiente(id))
-    ambiente(id)
+     ambiente(id)
   }
 }

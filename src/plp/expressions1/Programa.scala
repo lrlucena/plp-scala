@@ -1,10 +1,7 @@
 package plp.expressions1
 
-import plp.expressions1.expression.Expressao
-import plp.expressions1.expression.Valor
-import plp.expressions1.util.VisitorAvaliar
-import plp.expressions1.util.VisitorChecaTipo
-import plp.expressions1.util.VisitorException
+import plp.expressions1.expression.{Expressao, Valor}
+import plp.expressions1.util.{VisitorAvaliar, VisitorChecaTipo, VisitorException}
 
 class Programa(val exp: Expressao, visitorCheca: VisitorChecaTipo, visitorAvaliar: VisitorAvaliar) {
 
@@ -27,5 +24,4 @@ class Programa(val exp: Expressao, visitorCheca: VisitorChecaTipo, visitorAvalia
       case ve: VisitorException => false
     }
   }
-
 }
