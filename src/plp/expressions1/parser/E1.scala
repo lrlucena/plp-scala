@@ -23,9 +23,9 @@ trait E1 extends E1BaseListener with PropertyList {
     val exp = getValue(ctx.expressao())
     val resultado =
       ctx.getChild(0).getText() match {
-        case "-" => ExpMenos(exp)
+        case "-"      => ExpMenos(exp)
         case "length" => ExpLength(exp)
-        case "not" => ExpNot(exp)
+        case "not"    => ExpNot(exp)
       }
     setValue(ctx, resultado)
   }
@@ -47,7 +47,7 @@ trait E1 extends E1BaseListener with PropertyList {
       case (_, Some(a), _) => ValorInteiro(a.getText().toInt)
       case (_, _, Some(a)) => ValorString(a.getText().stripPrefix(""""""").stripSuffix("""""""))
 
-      case _ => ValorString("[[[Erro]]]")
+      case _               => ValorString("[[[Erro]]]")
     }
     setValue(ctx, resultado)
   }
@@ -57,12 +57,12 @@ trait E1 extends E1BaseListener with PropertyList {
     val dir = getValue(ctx.expressao(1))
     val resultado =
       ctx.getChild(1).getText() match {
-        case "+" => ExpSoma(esq, dir)
-        case "-" => ExpSub(esq, dir)
+        case "+"   => ExpSoma(esq, dir)
+        case "-"   => ExpSub(esq, dir)
         case "and" => ExpAnd(esq, dir)
-        case "or" => ExpOr(esq, dir)
-        case "==" => ExpEquals(esq, dir)
-        case "++" => ExpConcat(esq, dir)
+        case "or"  => ExpOr(esq, dir)
+        case "=="  => ExpEquals(esq, dir)
+        case "++"  => ExpConcat(esq, dir)
       }
     setValue(ctx, resultado)
   }

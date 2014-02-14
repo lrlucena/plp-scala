@@ -8,6 +8,6 @@ trait Visitor[T] extends VisitorE1[T] {
   def visit(expression: Id): T
   override def v = super.v.orElse {
     case a: ExpDeclaracao => visit(a)
-    case a: Id => visit(a)
+    case a: Id            => visit(a)
   }
 }
