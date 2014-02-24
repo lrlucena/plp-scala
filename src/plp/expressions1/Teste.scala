@@ -1,5 +1,7 @@
 package plp.expressions1
 
+import scala.util.{Failure, Success}
+
 import org.antlr.v4.runtime.{ANTLRInputStream, CommonTokenStream}
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 
@@ -9,8 +11,13 @@ import plp.expressions1.util.VisitorAvaliar
 object Teste extends App {
   val resultado = programa("""1+2+3+4-5""")
   val visitorAval = new VisitorAvaliar()
-  val p = ConstrutorPrograma.criarPrograma(resultado).executar
-  println(p)
+  val prog = ConstrutorPrograma.criarPrograma(resultado)
+  prog.checaTipo match {
+    case Success(_) =>
+      val p = prog.executar
+      println(p)
+    case Failure(f) => println("[Erro] " + f.getMessage())
+  }
 
   def programa(codigo: String) = {
     val input = new ANTLRInputStream(codigo)

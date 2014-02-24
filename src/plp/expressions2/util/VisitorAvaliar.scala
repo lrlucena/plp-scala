@@ -6,7 +6,8 @@ import plp.expressions2.expression.{ExpDeclaracao, Id}
 import plp.expressions2.memory.AmbienteExecucao
 
 class VisitorAvaliar(ambiente: AmbienteExecucao)
-  extends VisitorLE1() with Visitor[Valor] {
+    extends VisitorLE1()
+    with Visitor[Valor] {
 
   override def visit(declaracao: ExpDeclaracao): Valor = {
     ambiente.incrementa
@@ -33,6 +34,6 @@ class VisitorAvaliar(ambiente: AmbienteExecucao)
   }
 
   override def visit(id: Id) = {
-     ambiente(id)
+    ambiente(id)
   }
 }

@@ -1,71 +1,63 @@
-
 package plp.expressions1.util
 
 import plp.expressions1.expression.{ExpAnd, ExpConcat, ExpEquals, ExpLength, ExpMenos, ExpNot, ExpOr, ExpSoma, ExpSub, Expressao, Valor, ValorBooleano, ValorConcreto, ValorInteiro, ValorString}
 
 class VisitorAvaliar extends Visitor[Valor] {
-  private def vConcreto(e: Expressao) = v(e).asInstanceOf[ValorConcreto[_]]
 
-  private def vString(e: Expressao) = v(e).asInstanceOf[ValorString]
-
-  private def vBooleano(e: Expressao) = v(e).asInstanceOf[ValorBooleano]
-
-  private def vInteiro(e: Expressao) = v(e).asInstanceOf[ValorInteiro]
+  private def valor[T](e: Expressao) = v(e).asInstanceOf[ValorConcreto[T]].valor
 
   def visit(expr: ExpConcat) = {
-    val valorEsq = vString(expr.esq).valor
-    val valorDir = vString(expr.dir).valor
-    ValorString(valorEsq + valorDir)
+    val esq: String = valor(expr.esq)
+    val dir: String = valor(expr.dir)
+    ValorString(esq + dir)
   }
 
   def visit(expr: ExpEquals) = {
-    val valorEsq = vConcreto(expr.esq)
-    val valorDir = vConcreto(expr.dir)
-    ValorBooleano(valorEsq == valorDir)
+    val esq: Any = valor(expr.esq)
+    val dir: Any = valor(expr.dir)
+    ValorBooleano(esq == dir)
   }
 
   def visit(expr: ExpLength) = {
-    val valorExp = vString(expr.exp).valor
-    ValorInteiro(valorExp.length)
+    val exp: String = valor(expr.exp)
+    ValorInteiro(exp.length)
   }
 
   def visit(expr: ExpMenos) = {
-    val valorExp = vInteiro(expr.exp).valor
-    ValorInteiro(-valorExp)
+    val exp: Int = valor(expr.exp)
+    ValorInteiro(-exp)
   }
 
   def visit(expr: ExpNot) = {
-    val valorExp = vBooleano(expr.exp).valor
-    ValorBooleano(!valorExp)
+    val exp: Boolean = valor(expr.exp)
+    ValorBooleano(!exp)
   }
 
   def visit(expr: ExpAnd) = {
-    val valorEsq = vBooleano(expr.esq).valor
-    val valorDir = vBooleano(expr.dir).valor
-    ValorBooleano(valorEsq && valorDir)
+    val esq: Boolean = valor(expr.esq)
+    val dir: Boolean = valor(expr.dir)
+    ValorBooleano(esq && dir)
   }
 
   def visit(expr: ExpOr) = {
-    val valorEsq = vBooleano(expr.esq).valor
-    val valorDir = vBooleano(expr.dir).valor
-    ValorBooleano(valorEsq || valorDir)
+    val esq: Boolean = valor(expr.esq)
+    val dir: Boolean = valor(expr.dir)
+    ValorBooleano(esq || dir)
   }
 
   def visit(expr: ExpSoma) = {
-    val valorEsq = vInteiro(expr.esq).valor
-    val valorDir = vInteiro(expr.dir).valor
-    ValorInteiro(valorEsq + valorDir)
+    val esq: Int = valor(expr.esq)
+    val dir: Int = valor(expr.dir)
+    ValorInteiro(esq + dir)
   }
 
   def visit(expr: ExpSub) = {
-    val valorEsq = vInteiro(expr.esq).valor
-    val valorDir = vInteiro(expr.dir).valor
-    ValorInteiro(valorEsq - valorDir)
+    val esq: Int = valor(expr.esq)
+    val dir: Int = valor(expr.dir)
+    ValorInteiro(esq - dir)
   }
 
   def visit(valorBooleano: ValorBooleano) = valorBooleano
-
   def visit(valorInteiro: ValorInteiro) = valorInteiro
-
   def visit(valorString: ValorString) = valorString
 }

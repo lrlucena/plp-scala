@@ -18,7 +18,7 @@ object Exemplos extends App {
   val exp1 = ExpDeclaracao(list1, exp2)
   val prg = ConstrutorPrograma.criarPrograma(exp1)
   try {
-    if (!prg.checaTipo()) {
+    if (prg.checaTipo.isFailure) {
       println("Erro de tipo")
     } else {
       println(prg.executar)
