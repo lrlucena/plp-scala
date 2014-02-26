@@ -24,10 +24,10 @@ public class E2Parser extends Parser {
 		"String", "S", "ID"
 	};
 	public static final int
-		RULE_programa = 0, RULE_expressao = 1, RULE_valor = 2, RULE_decVars = 3, 
+		RULE_programa = 0, RULE_expressao = 1, RULE_valor = 2, RULE_declaracao = 3, 
 		RULE_decVariavel = 4;
 	public static final String[] ruleNames = {
-		"programa", "expressao", "valor", "decVars", "decVariavel"
+		"programa", "expressao", "valor", "declaracao", "decVariavel"
 	};
 
 	@Override
@@ -125,23 +125,6 @@ public class E2Parser extends Parser {
 			if ( listener instanceof E2Listener ) ((E2Listener)listener).exitOpUnaria(this);
 		}
 	}
-	public static class DecVarContext extends ExpressaoContext {
-		public DecVarsContext decVars() {
-			return getRuleContext(DecVarsContext.class,0);
-		}
-		public ExpressaoContext expressao() {
-			return getRuleContext(ExpressaoContext.class,0);
-		}
-		public DecVarContext(ExpressaoContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof E2Listener ) ((E2Listener)listener).enterDecVar(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof E2Listener ) ((E2Listener)listener).exitDecVar(this);
-		}
-	}
 	public static class TerminalContext extends ExpressaoContext {
 		public ValorContext valor() {
 			return getRuleContext(ValorContext.class,0);
@@ -154,6 +137,26 @@ public class E2Parser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof E2Listener ) ((E2Listener)listener).exitTerminal(this);
+		}
+	}
+	public static class ExpDeclaracaoContext extends ExpressaoContext {
+		public DeclaracaoContext declaracao(int i) {
+			return getRuleContext(DeclaracaoContext.class,i);
+		}
+		public List<DeclaracaoContext> declaracao() {
+			return getRuleContexts(DeclaracaoContext.class);
+		}
+		public ExpressaoContext expressao() {
+			return getRuleContext(ExpressaoContext.class,0);
+		}
+		public ExpDeclaracaoContext(ExpressaoContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof E2Listener ) ((E2Listener)listener).enterExpDeclaracao(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof E2Listener ) ((E2Listener)listener).exitExpDeclaracao(this);
 		}
 	}
 	public static class OpBinContext extends ExpressaoContext {
@@ -186,7 +189,7 @@ public class E2Parser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(26);
+			setState(33);
 			switch (_input.LA(1)) {
 			case 1:
 				{
@@ -218,13 +221,27 @@ public class E2Parser extends Parser {
 				break;
 			case 6:
 				{
-				_localctx = new DecVarContext(_localctx);
+				_localctx = new ExpDeclaracaoContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(19); match(6);
-				setState(20); decVars();
-				setState(21); match(2);
-				setState(22); expressao(1);
+				setState(20); declaracao();
+				setState(25);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				while (_la==4) {
+					{
+					{
+					setState(21); match(4);
+					setState(22); declaracao();
+					}
+					}
+					setState(27);
+					_errHandler.sync(this);
+					_la = _input.LA(1);
+				}
+				setState(28); match(2);
+				setState(29); expressao(1);
 				}
 				break;
 			case Inteiro:
@@ -234,7 +251,7 @@ public class E2Parser extends Parser {
 				_localctx = new TerminalContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(24); valor();
+				setState(31); valor();
 				}
 				break;
 			case ID:
@@ -242,36 +259,36 @@ public class E2Parser extends Parser {
 				_localctx = new IdContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(25); match(ID);
+				setState(32); match(ID);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(45);
+			setState(52);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			while ( _alt!=2 && _alt!=-1 ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(43);
-					switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
+					setState(50);
+					switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 					case 1:
 						{
 						_localctx = new OpBinContext(new ExpressaoContext(_parentctx, _parentState, _p));
 						pushNewRecursionContext(_localctx, _startState, RULE_expressao);
-						setState(28);
+						setState(35);
 						if (!(8 >= _localctx._p)) throw new FailedPredicateException(this, "8 >= $_p");
-						setState(29);
+						setState(36);
 						_la = _input.LA(1);
 						if ( !(_la==5 || _la==7) ) {
 						_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(30); expressao(9);
+						setState(37); expressao(9);
 						}
 						break;
 
@@ -279,10 +296,10 @@ public class E2Parser extends Parser {
 						{
 						_localctx = new OpBinContext(new ExpressaoContext(_parentctx, _parentState, _p));
 						pushNewRecursionContext(_localctx, _startState, RULE_expressao);
-						setState(31);
+						setState(38);
 						if (!(7 >= _localctx._p)) throw new FailedPredicateException(this, "7 >= $_p");
-						setState(32); match(10);
-						setState(33); expressao(8);
+						setState(39); match(10);
+						setState(40); expressao(8);
 						}
 						break;
 
@@ -290,10 +307,10 @@ public class E2Parser extends Parser {
 						{
 						_localctx = new OpBinContext(new ExpressaoContext(_parentctx, _parentState, _p));
 						pushNewRecursionContext(_localctx, _startState, RULE_expressao);
-						setState(34);
+						setState(41);
 						if (!(6 >= _localctx._p)) throw new FailedPredicateException(this, "6 >= $_p");
-						setState(35); match(3);
-						setState(36); expressao(7);
+						setState(42); match(3);
+						setState(43); expressao(7);
 						}
 						break;
 
@@ -301,10 +318,10 @@ public class E2Parser extends Parser {
 						{
 						_localctx = new OpBinContext(new ExpressaoContext(_parentctx, _parentState, _p));
 						pushNewRecursionContext(_localctx, _startState, RULE_expressao);
-						setState(37);
+						setState(44);
 						if (!(5 >= _localctx._p)) throw new FailedPredicateException(this, "5 >= $_p");
-						setState(38); match(8);
-						setState(39); expressao(6);
+						setState(45); match(8);
+						setState(46); expressao(6);
 						}
 						break;
 
@@ -312,18 +329,18 @@ public class E2Parser extends Parser {
 						{
 						_localctx = new OpBinContext(new ExpressaoContext(_parentctx, _parentState, _p));
 						pushNewRecursionContext(_localctx, _startState, RULE_expressao);
-						setState(40);
+						setState(47);
 						if (!(4 >= _localctx._p)) throw new FailedPredicateException(this, "4 >= $_p");
-						setState(41); match(12);
-						setState(42); expressao(5);
+						setState(48); match(12);
+						setState(49); expressao(5);
 						}
 						break;
 					}
 					} 
 				}
-				setState(47);
+				setState(54);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			}
 			}
 		}
@@ -363,7 +380,7 @@ public class E2Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(48);
+			setState(55);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << Inteiro) | (1L << Booleano) | (1L << String))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -382,49 +399,31 @@ public class E2Parser extends Parser {
 		return _localctx;
 	}
 
-	public static class DecVarsContext extends ParserRuleContext {
-		public DecVariavelContext decVariavel(int i) {
-			return getRuleContext(DecVariavelContext.class,i);
+	public static class DeclaracaoContext extends ParserRuleContext {
+		public DecVariavelContext decVariavel() {
+			return getRuleContext(DecVariavelContext.class,0);
 		}
-		public List<DecVariavelContext> decVariavel() {
-			return getRuleContexts(DecVariavelContext.class);
-		}
-		public DecVarsContext(ParserRuleContext parent, int invokingState) {
+		public DeclaracaoContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_decVars; }
+		@Override public int getRuleIndex() { return RULE_declaracao; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof E2Listener ) ((E2Listener)listener).enterDecVars(this);
+			if ( listener instanceof E2Listener ) ((E2Listener)listener).enterDeclaracao(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof E2Listener ) ((E2Listener)listener).exitDecVars(this);
+			if ( listener instanceof E2Listener ) ((E2Listener)listener).exitDeclaracao(this);
 		}
 	}
 
-	public final DecVarsContext decVars() throws RecognitionException {
-		DecVarsContext _localctx = new DecVarsContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_decVars);
-		int _la;
+	public final DeclaracaoContext declaracao() throws RecognitionException {
+		DeclaracaoContext _localctx = new DeclaracaoContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_declaracao);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(50); decVariavel();
-			setState(55);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			while (_la==4) {
-				{
-				{
-				setState(51); match(4);
-				setState(52); decVariavel();
-				}
-				}
-				setState(57);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			}
+			setState(57); decVariavel();
 			}
 		}
 		catch (RecognitionException re) {
@@ -463,10 +462,10 @@ public class E2Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(58); match(13);
-			setState(59); match(ID);
-			setState(60); match(11);
-			setState(61); expressao(0);
+			setState(59); match(13);
+			setState(60); match(ID);
+			setState(61); match(11);
+			setState(62); expressao(0);
 			}
 		}
 		catch (RecognitionException re) {
@@ -502,24 +501,24 @@ public class E2Parser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\uacf5\uee8c\u4f5d\u8b0d\u4a45\u78bd\u1b2f\u3378\3\24B\4\2\t\2\4\3\t"+
+		"\3\uacf5\uee8c\u4f5d\u8b0d\u4a45\u78bd\u1b2f\u3378\3\24C\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\5\3\35\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\3\7\3.\n\3\f\3\16\3\61\13\3\3\4\3\4\3\5\3\5\3\5\7"+
-		"\58\n\5\f\5\16\5;\13\5\3\6\3\6\3\6\3\6\3\6\3\6\2\7\2\4\6\b\n\2\4\4\2\7"+
-		"\7\t\t\3\2\20\22G\2\f\3\2\2\2\4\34\3\2\2\2\6\62\3\2\2\2\b\64\3\2\2\2\n"+
-		"<\3\2\2\2\f\r\5\4\3\2\r\3\3\2\2\2\16\17\b\3\1\2\17\20\7\3\2\2\20\35\5"+
-		"\4\3\2\21\22\7\13\2\2\22\35\5\4\3\2\23\24\7\t\2\2\24\35\5\4\3\2\25\26"+
-		"\7\b\2\2\26\27\5\b\5\2\27\30\7\4\2\2\30\31\5\4\3\2\31\35\3\2\2\2\32\35"+
-		"\5\6\4\2\33\35\7\24\2\2\34\16\3\2\2\2\34\21\3\2\2\2\34\23\3\2\2\2\34\25"+
-		"\3\2\2\2\34\32\3\2\2\2\34\33\3\2\2\2\35/\3\2\2\2\36\37\6\3\2\3\37 \t\2"+
-		"\2\2 .\5\4\3\2!\"\6\3\3\3\"#\7\f\2\2#.\5\4\3\2$%\6\3\4\3%&\7\5\2\2&.\5"+
-		"\4\3\2\'(\6\3\5\3()\7\n\2\2).\5\4\3\2*+\6\3\6\3+,\7\16\2\2,.\5\4\3\2-"+
-		"\36\3\2\2\2-!\3\2\2\2-$\3\2\2\2-\'\3\2\2\2-*\3\2\2\2.\61\3\2\2\2/-\3\2"+
-		"\2\2/\60\3\2\2\2\60\5\3\2\2\2\61/\3\2\2\2\62\63\t\3\2\2\63\7\3\2\2\2\64"+
-		"9\5\n\6\2\65\66\7\6\2\2\668\5\n\6\2\67\65\3\2\2\28;\3\2\2\29\67\3\2\2"+
-		"\29:\3\2\2\2:\t\3\2\2\2;9\3\2\2\2<=\7\17\2\2=>\7\24\2\2>?\7\r\2\2?@\5"+
-		"\4\3\2@\13\3\2\2\2\6\34-/9";
+		"\3\3\3\3\7\3\32\n\3\f\3\16\3\35\13\3\3\3\3\3\3\3\3\3\3\3\5\3$\n\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3\65\n\3\f"+
+		"\3\16\38\13\3\3\4\3\4\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\2\7\2\4\6\b\n\2"+
+		"\4\4\2\7\7\t\t\3\2\20\22H\2\f\3\2\2\2\4#\3\2\2\2\69\3\2\2\2\b;\3\2\2\2"+
+		"\n=\3\2\2\2\f\r\5\4\3\2\r\3\3\2\2\2\16\17\b\3\1\2\17\20\7\3\2\2\20$\5"+
+		"\4\3\2\21\22\7\13\2\2\22$\5\4\3\2\23\24\7\t\2\2\24$\5\4\3\2\25\26\7\b"+
+		"\2\2\26\33\5\b\5\2\27\30\7\6\2\2\30\32\5\b\5\2\31\27\3\2\2\2\32\35\3\2"+
+		"\2\2\33\31\3\2\2\2\33\34\3\2\2\2\34\36\3\2\2\2\35\33\3\2\2\2\36\37\7\4"+
+		"\2\2\37 \5\4\3\2 $\3\2\2\2!$\5\6\4\2\"$\7\24\2\2#\16\3\2\2\2#\21\3\2\2"+
+		"\2#\23\3\2\2\2#\25\3\2\2\2#!\3\2\2\2#\"\3\2\2\2$\66\3\2\2\2%&\6\3\2\3"+
+		"&\'\t\2\2\2\'\65\5\4\3\2()\6\3\3\3)*\7\f\2\2*\65\5\4\3\2+,\6\3\4\3,-\7"+
+		"\5\2\2-\65\5\4\3\2./\6\3\5\3/\60\7\n\2\2\60\65\5\4\3\2\61\62\6\3\6\3\62"+
+		"\63\7\16\2\2\63\65\5\4\3\2\64%\3\2\2\2\64(\3\2\2\2\64+\3\2\2\2\64.\3\2"+
+		"\2\2\64\61\3\2\2\2\658\3\2\2\2\66\64\3\2\2\2\66\67\3\2\2\2\67\5\3\2\2"+
+		"\28\66\3\2\2\29:\t\3\2\2:\7\3\2\2\2;<\5\n\6\2<\t\3\2\2\2=>\7\17\2\2>?"+
+		"\7\24\2\2?@\7\r\2\2@A\5\4\3\2A\13\3\2\2\2\6\33#\64\66";
 	public static final ATN _ATN =
 		ATNSimulator.deserialize(_serializedATN.toCharArray());
 	static {

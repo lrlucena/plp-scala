@@ -1,17 +1,19 @@
 package plp.expressions2.parser
 
+import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.language.reflectiveCalls
-
 import org.antlr.v4.runtime.ParserRuleContext
 import org.antlr.v4.runtime.misc.NotNull
-
 import plp.expressions1.parser.{Antlr2Scala, LE1, PropertyList}
 import plp.expressions2.expression.{DecVariavel, ExpDeclaracao, Id}
-import plp.expressions2.parser.E2Parser.{DecVarContext, DecVariavelContext, DecVarsContext, IdContext, OpBinContext, OpUnariaContext, ProgramaContext, TerminalContext, ValorContext}
+import plp.expressions2.parser.E2Parser.{DecVariavelContext, ExpDeclaracaoContext, IdContext, OpBinContext, OpUnariaContext, ProgramaContext, TerminalContext, ValorContext}
+import plp.expressions2.expression.Declaracao
 
 trait LE2 extends PropertyList with Antlr2Scala {
   import scala.language.reflectiveCalls
   import org.antlr.v4.runtime.tree.TerminalNode
+  
+  private type ParserRuleContextList = java.util.List[_ <: ParserRuleContext]
 
   private type IdContext = ParserRuleContext {
     def ID(): TerminalNode
@@ -20,13 +22,9 @@ trait LE2 extends PropertyList with Antlr2Scala {
     def ID(): TerminalNode
     def expressao(): ParserRuleContext
   }
-  private type DecVarContext = ParserRuleContext {
-    def decVars(): ParserRuleContext
+  private type ExpDeclaracaoContext = ParserRuleContext {
+    def declaracao(): ParserRuleContextList
     def expressao(): ParserRuleContext
-  }
-  private type DecVarsContext = ParserRuleContext {
-    def decVariavel(): java.util.List[_ <: ParserRuleContext]
-    def decVariavel(i: Int): ParserRuleContext
   }
 
   protected def id(ctx: IdContext) {
@@ -38,31 +36,24 @@ trait LE2 extends PropertyList with Antlr2Scala {
     val exp = getValue(ctx.expressao)
     setValue(ctx, DecVariavel(id, exp))
   }
-  protected def decVar(ctx: DecVarContext) {
-    val declaracoes: List[DecVariavel] = get(ctx.decVars)
+  protected def expDeclaracao(ctx: ExpDeclaracaoContext) {
+    import scala.collection.JavaConverters._
+    val declaracoes: List[Declaracao] = ctx.declaracao.asScala.toList.map(get(_).asInstanceOf[Declaracao])
     val exp = getValue(ctx.expressao)
     setValue(ctx, ExpDeclaracao(declaracoes, exp))
   }
-  protected def decVars1(ctx: DecVarsContext) {
-    val vars: List[DecVariavel] =
-      (for (i <- 0 to (ctx.decVariavel.size - 1)) yield {
-        get(ctx.decVariavel(i)).asInstanceOf[DecVariavel]
-      }).toList
-    setValue(ctx, vars)
-  }
-
 }
 
 trait E2 extends E2BaseListener with LE1 with LE2 {
-  import plp.expressions2.parser.E2Parser.{ DecVarContext, DecVariavelContext, DecVarsContext, IdContext, OpBinContext, OpUnariaContext, ProgramaContext, TerminalContext, ValorContext }
-
+  import plp.expressions2.parser.E2Parser.{ ExpDeclaracaoContext, DecVariavelContext, IdContext, OpBinContext, OpUnariaContext, ProgramaContext, TerminalContext, ValorContext }
+  // LE1
   override def exitPrograma(@NotNull ctx: ProgramaContext) { programa(ctx) }
   override def exitValor(@NotNull ctx: ValorContext) { valor(ctx) }
   override def exitOpBin(@NotNull ctx: OpBinContext) { opBin(ctx) }
   override def exitOpUnaria(@NotNull ctx: OpUnariaContext) { opUnaria(ctx) }
   override def exitTerminal(@NotNull ctx: TerminalContext) { terminal(ctx) }
+  // LE2
   override def exitId(@NotNull ctx: IdContext) { id(ctx) }
   override def exitDecVariavel(@NotNull ctx: DecVariavelContext) { decVariavel(ctx) }
-  override def exitDecVar(@NotNull ctx: DecVarContext) { decVar(ctx) }
-  override def exitDecVars(@NotNull ctx: DecVarsContext) { decVars1(ctx) }
+  override def exitExpDeclaracao(@NotNull ctx: ExpDeclaracaoContext) { expDeclaracao(ctx) }
 }

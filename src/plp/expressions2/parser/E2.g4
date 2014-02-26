@@ -12,12 +12,13 @@ expressao : 'length' expressao               # opUnaria
           | expressao '++' expressao         # opBin
           | valor                            # terminal
           | ID                               # id
-          | 'let' decVars 'in' expressao     # decVar
+          | 'let' declaracao (',' declaracao)*
+            'in' expressao                   # expDeclaracao
           ;
 
 valor : Inteiro | Booleano | String ;
 
-decVars: decVariavel (',' decVariavel)*;
+declaracao: decVariavel;
 
 decVariavel : 'var' ID '=' expressao ;
 

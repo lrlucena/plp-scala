@@ -43,19 +43,6 @@ public class E2BaseListener implements E2Listener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterDecVars(@NotNull E2Parser.DecVarsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitDecVars(@NotNull E2Parser.DecVarsContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
 	@Override public void enterOpUnaria(@NotNull E2Parser.OpUnariaContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -63,19 +50,6 @@ public class E2BaseListener implements E2Listener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitOpUnaria(@NotNull E2Parser.OpUnariaContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterDecVar(@NotNull E2Parser.DecVarContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitDecVar(@NotNull E2Parser.DecVarContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -108,6 +82,19 @@ public class E2BaseListener implements E2Listener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
+	@Override public void enterExpDeclaracao(@NotNull E2Parser.ExpDeclaracaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitExpDeclaracao(@NotNull E2Parser.ExpDeclaracaoContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
 	@Override public void enterOpBin(@NotNull E2Parser.OpBinContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -115,6 +102,19 @@ public class E2BaseListener implements E2Listener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitOpBin(@NotNull E2Parser.OpBinContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterDeclaracao(@NotNull E2Parser.DeclaracaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitDeclaracao(@NotNull E2Parser.DeclaracaoContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

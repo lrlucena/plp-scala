@@ -31,17 +31,6 @@ public interface E2Listener extends ParseTreeListener {
 	void exitPrograma(@NotNull E2Parser.ProgramaContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link E2Parser#decVars}.
-	 * @param ctx the parse tree
-	 */
-	void enterDecVars(@NotNull E2Parser.DecVarsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link E2Parser#decVars}.
-	 * @param ctx the parse tree
-	 */
-	void exitDecVars(@NotNull E2Parser.DecVarsContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link E2Parser#opUnaria}.
 	 * @param ctx the parse tree
 	 */
@@ -51,17 +40,6 @@ public interface E2Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOpUnaria(@NotNull E2Parser.OpUnariaContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link E2Parser#decVar}.
-	 * @param ctx the parse tree
-	 */
-	void enterDecVar(@NotNull E2Parser.DecVarContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link E2Parser#decVar}.
-	 * @param ctx the parse tree
-	 */
-	void exitDecVar(@NotNull E2Parser.DecVarContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link E2Parser#terminal}.
@@ -86,6 +64,17 @@ public interface E2Listener extends ParseTreeListener {
 	void exitValor(@NotNull E2Parser.ValorContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link E2Parser#expDeclaracao}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpDeclaracao(@NotNull E2Parser.ExpDeclaracaoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link E2Parser#expDeclaracao}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpDeclaracao(@NotNull E2Parser.ExpDeclaracaoContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link E2Parser#opBin}.
 	 * @param ctx the parse tree
 	 */
@@ -95,6 +84,17 @@ public interface E2Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOpBin(@NotNull E2Parser.OpBinContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link E2Parser#declaracao}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeclaracao(@NotNull E2Parser.DeclaracaoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link E2Parser#declaracao}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeclaracao(@NotNull E2Parser.DeclaracaoContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link E2Parser#decVariavel}.

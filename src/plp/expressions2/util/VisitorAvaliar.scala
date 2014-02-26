@@ -1,9 +1,10 @@
 package plp.expressions2.util
 
 import plp.expressions1.expression.Valor
-import plp.expressions1.util.{VisitorAvaliar => VisitorLE1}
-import plp.expressions2.expression.{ExpDeclaracao, Id}
+import plp.expressions1.util.{ VisitorAvaliar => VisitorLE1 }
+import plp.expressions2.expression.{ ExpDeclaracao, Id }
 import plp.expressions2.memory.AmbienteExecucao
+import plp.expressions2.expression.DecVariavel
 
 class VisitorAvaliar(ambiente: AmbienteExecucao)
     extends VisitorLE1()
@@ -25,11 +26,9 @@ class VisitorAvaliar(ambiente: AmbienteExecucao)
   }
 
   protected def resolveValueBindings(expressaoDec: ExpDeclaracao) = {
-    val resolvedValues =
-      for (declaration <- expressaoDec.seqdecVariavel) yield {
-        val valor = v(declaration.expressao)
-        (declaration.id -> valor)
-      }
+    val resolvedValues = expressaoDec.declaracoes map {
+      case dec: DecVariavel => dec.id -> v(dec.expressao)
+    }
     resolvedValues.toMap
   }
 

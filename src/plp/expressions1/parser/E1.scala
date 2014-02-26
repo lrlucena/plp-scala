@@ -4,11 +4,11 @@ import scala.language.reflectiveCalls
 
 import org.antlr.v4.runtime.ParserRuleContext
 import org.antlr.v4.runtime.misc.NotNull
-import org.antlr.v4.runtime.tree.{ParseTree, ParseTreeProperty}
+import org.antlr.v4.runtime.tree.{ ParseTree, ParseTreeProperty }
 
-import plp.expressions1.expression.{ExpAnd, ExpConcat, ExpEquals, ExpLength, ExpMenos, ExpNot, ExpOr, ExpSoma, ExpSub, Expressao, ValorBooleano, ValorInteiro, ValorString}
-import plp.expressions1.parser.E1Parser.{OpBinContext, OpUnariaContext, ProgramaContext, TerminalContext, ValorContext}
-import plp.expressions1.util.Tipo.{BOOLEANO, INTEIRO, STRING}
+import plp.expressions1.expression.{ ExpAnd, ExpConcat, ExpEquals, ExpLength, ExpMenos, ExpNot, ExpOr, ExpSoma, ExpSub, Expressao, ValorBooleano, ValorInteiro, ValorString }
+import plp.expressions1.parser.E1Parser.{ OpBinContext, OpUnariaContext, ProgramaContext, TerminalContext, ValorContext }
+import plp.expressions1.util.Tipo.{ BOOLEANO, INTEIRO, STRING }
 
 trait PropertyList {
   protected val values = new ParseTreeProperty[Any]
@@ -51,18 +51,16 @@ trait LE1 extends PropertyList with Antlr2Scala {
   }
 
   protected def valor(ctx: ValorContext) {
-    val valor = 0 match {
-      case _ if (Option(ctx.Booleano).isDefined) => (ctx.Booleano, BOOLEANO)
-      case _ if (Option(ctx.Inteiro).isDefined)  => (ctx.Inteiro, INTEIRO)
-      case _ if (Option(ctx.String).isDefined)   => (ctx.String, STRING)
-    }
+    val resultado = 0 match {
+      case _ if (Option(ctx.Booleano).isDefined) =>
+        ValorBooleano(ctx.Booleano.text == "verdadeiro")
+      case _ if (Option(ctx.Inteiro).isDefined) =>
+        ValorInteiro(ctx.Inteiro.text.toInt)
+      case _ if (Option(ctx.String).isDefined) =>
+        ValorString(ctx.String.text.stripPrefix(""""""").stripSuffix("""""""))
 
-    val resultado = valor match {
-      case (a, BOOLEANO) => ValorBooleano(a.text == "verdadeiro")
-      case (a, INTEIRO)  => ValorInteiro(a.text.toInt)
-      case (a, STRING)   => ValorString(a.text.stripPrefix(""""""").stripSuffix("""""""))
-
-      case _             => ValorString("[[[Erro]]]")
+      case _ =>
+        ValorString("[[[Erro]]]")
     }
     setValue(ctx, resultado)
   }
