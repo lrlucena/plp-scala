@@ -13,7 +13,7 @@ class VisitorChecaTipo(ambiente: AmbienteCompilacao)
   def visit(id: Id) = ambiente(id)
 
   def visit(expDeclaracao: ExpDeclaracao) = {
-    def resolveAndCheckTypeBindings(expDeclaracao: ExpDeclaracao) = {
+    def typeBindings(expDeclaracao: ExpDeclaracao) = {
       val resolvedTypes =
         expDeclaracao.declaracoes map {
           case dec: DecVariavel => dec.id -> v(dec.expressao)
@@ -21,22 +21,19 @@ class VisitorChecaTipo(ambiente: AmbienteCompilacao)
       resolvedTypes.toMap
     }
 
-    ambiente.incrementa
-    val t = Try {
-      val resolvedTypes = resolveAndCheckTypeBindings(expDeclaracao)
-      includeTypeBindings(resolvedTypes)
-      v(expDeclaracao.expressao)
-    }
-    ambiente.restaura()
-    t match {
-      case Success(tipo) => tipo
-      case Failure(erro) => throw erro
+    ambiente execute {
+      Try {
+        val resolvedTypes = typeBindings(expDeclaracao)
+        includeTypeBindings(resolvedTypes)
+        v(expDeclaracao.expressao)
+      } match {
+        case Success(tipo) => tipo
+        case Failure(erro) => throw erro
+      }
     }
   }
 
-  private def includeTypeBindings(resolvedTypes: scala.collection.immutable.Map[Id, Try[Tipo]]) {
-    for ((id, tipo) <- resolvedTypes) {
-      ambiente(id) = tipo
-    }
+  private def includeTypeBindings(resolvedTypes: scala.collection.Map[Id, Try[Tipo]]) {
+    ambiente ++ resolvedTypes
   }
 }

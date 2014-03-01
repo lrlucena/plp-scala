@@ -4,15 +4,16 @@ import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.language.reflectiveCalls
 import org.antlr.v4.runtime.ParserRuleContext
 import org.antlr.v4.runtime.misc.NotNull
-import plp.expressions1.parser.{Antlr2Scala, LE1, PropertyList}
-import plp.expressions2.expression.{DecVariavel, ExpDeclaracao, Id}
-import plp.expressions2.parser.E2Parser.{DecVariavelContext, ExpDeclaracaoContext, IdContext, OpBinContext, OpUnariaContext, ProgramaContext, TerminalContext, ValorContext}
+import plp.expressions1.parser.{ Antlr2Scala, LE1, PropertyList }
+import plp.expressions2.expression.{ DecVariavel, ExpDeclaracao, Id }
+import plp.expressions2.parser.E2Parser.{ DecVariavelContext, ExpDeclaracaoContext, IdContext, OpBinContext, OpUnariaContext, ProgramaContext, TerminalContext, ValorContext }
 import plp.expressions2.expression.Declaracao
+import plp.expressions2.parser.E2Parser.DeclaracaoContext
 
 trait LE2 extends PropertyList with Antlr2Scala {
   import scala.language.reflectiveCalls
   import org.antlr.v4.runtime.tree.TerminalNode
-  
+
   private type ParserRuleContextList = java.util.List[_ <: ParserRuleContext]
 
   private type IdContext = ParserRuleContext {
@@ -36,6 +37,10 @@ trait LE2 extends PropertyList with Antlr2Scala {
     val exp = getValue(ctx.expressao)
     setValue(ctx, DecVariavel(id, exp))
   }
+  protected def declaracao(ctx: ParserRuleContext) {
+    val decl: Declaracao = get(ctx.getChild(0))
+    setValue(ctx, decl)
+  }
   protected def expDeclaracao(ctx: ExpDeclaracaoContext) {
     import scala.collection.JavaConverters._
     val declaracoes: List[Declaracao] = ctx.declaracao.asScala.toList.map(get(_).asInstanceOf[Declaracao])
@@ -55,5 +60,6 @@ trait E2 extends E2BaseListener with LE1 with LE2 {
   // LE2
   override def exitId(@NotNull ctx: IdContext) { id(ctx) }
   override def exitDecVariavel(@NotNull ctx: DecVariavelContext) { decVariavel(ctx) }
+  override def exitDeclaracao(@NotNull ctx: DeclaracaoContext) { declaracao(ctx) }
   override def exitExpDeclaracao(@NotNull ctx: ExpDeclaracaoContext) { expDeclaracao(ctx) }
 }

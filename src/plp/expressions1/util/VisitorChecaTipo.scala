@@ -1,9 +1,9 @@
 package plp.expressions1.util
 
-import scala.util.{Failure, Success, Try}
+import scala.util.{ Failure, Success, Try }
 
-import Tipo.{BOOLEANO, INTEIRO, STRING}
-import plp.expressions1.expression.{ExpAnd, ExpBinaria, ExpConcat, ExpEquals, ExpLength, ExpMenos, ExpNot, ExpOr, ExpSoma, ExpSub, ExpUnaria, Expressao, ValorBooleano, ValorInteiro, ValorString}
+import Tipo.{ BOOLEANO, INTEIRO, STRING }
+import plp.expressions1.expression.{ ExpAnd, ExpBinaria, ExpConcat, ExpEquals, ExpLength, ExpMenos, ExpNot, ExpOr, ExpSoma, ExpSub, ExpUnaria, Expressao, ValorBooleano, ValorInteiro, ValorString }
 
 class VisitorException(msg: String = "") extends Exception(msg) {}
 
@@ -27,6 +27,16 @@ trait ChecaTipo {
   protected def opBinStr(implicit expression: ExpBinaria, erro: String) =
     opBin(_.eString, STRING)
 
+  protected def opBinCmp(implicit expression: ExpBinaria, erro: String) = {
+    for (
+      esq <- tipo(expression.esq);
+      dir <- tipo(expression.dir)
+      if esq == dir
+    ) yield BOOLEANO
+  } orElse {
+    Failure(new VisitorException(erro))
+  }
+
   protected def opUnaria(eTipo: Tipo => Boolean, t: Tipo)(expression: ExpUnaria, erro: String) = {
     for (
       exp <- tipo(expression.exp) if eTipo(exp)
@@ -45,19 +55,14 @@ class VisitorChecaTipo extends Visitor[Try[Tipo]] with ChecaTipo {
 
   def visit(expression: ExpConcat) =
     opBinStr(expression,
-      "A operação de concatenação necessita que o seu termo seja uma string.")
+      "A operação de concatenação necessita que os seus termos sejam strings.")
 
-  def visit(expression: ExpEquals) = {
-    for (
-      esq <- tipo(expression.esq); dir <- tipo(expression.dir) if esq == dir
-    ) yield BOOLEANO
-  } orElse {
-    Failure(new VisitorException("A operação de equals necessita que seus termos sejam do mesmo tipo."))
-  }
+  def visit(expression: ExpEquals) = opBinCmp(expression,
+    "A operação de equals necessita que seus termos sejam do mesmo tipo.")
 
   def visit(expression: ExpLength) =
     opUnaria(_.eString, INTEIRO)(expression,
-      "A operação de menos necessita que o seu termo seja uma string.")
+      "A operação length necessita que o seu termo seja uma string.")
 
   def visit(expression: ExpMenos) =
     opUnaria(_.eInteiro, INTEIRO)(expression,

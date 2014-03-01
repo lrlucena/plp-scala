@@ -8,7 +8,7 @@ import plp.expressions2.parser.{E2, E2Lexer, E2Parser}
 import plp.expressions2.util.VisitorAvaliar
 
 object Teste extends App {
-  val resultado = programa("""let var x = 1, var y=3 in y+x""")
+  val resultado = programa("""let var x = 1, var y=3 in 3+y+x""")
   val ambiente = new AmbienteExecucao()
   val visitorAval = new VisitorAvaliar(ambiente)
   val p = visitorAval.v(resultado)

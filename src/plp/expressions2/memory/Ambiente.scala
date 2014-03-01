@@ -8,13 +8,13 @@ import plp.expressions1.util.Tipo
 import plp.expressions2.expression.Id
 
 trait Ambiente[T] {
-  val pilha = Stack[Map[Id, T]]()
+  private val pilha = Stack[Map[Id, T]]()
 
-  def incrementa() {
+  protected def incrementa() {
     pilha.push(Map())
   }
 
-  def restaura() {
+  protected def restaura() {
     pilha.pop
   }
 
@@ -25,6 +25,19 @@ trait Ambiente[T] {
     } else {
       topo(idArg) = valorId
     }
+  }
+
+  def ++(maps: scala.collection.Map[Id, T]) {
+    for ((id, tipo) <- maps) {
+      this(id) = tipo
+    }
+  }
+
+  def execute[V](comando: => V): V = {
+    incrementa
+    val v = comando
+    restaura
+    v
   }
 
   def apply(idArg: Id): T = {
